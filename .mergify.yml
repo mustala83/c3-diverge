@@ -1,0 +1,18 @@
+# A deliberately STRICT configuration. Nothing here asks Mergify to merge anything cheaply.
+queue_rules:
+  - name: default
+    queue_conditions:
+      - base=main
+    merge_conditions:
+      - check-success=required-ci
+      - "#approved-reviews-by>=1"
+      - "#changes-requested-reviews-by=0"
+      - label=approved-by-maintainer
+
+pull_request_rules:
+  - name: queue
+    conditions:
+      - base=main
+    actions:
+      queue:
+        name: default
