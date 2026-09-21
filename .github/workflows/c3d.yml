@@ -1,0 +1,16 @@
+name: c3-diverge-payload
+on: [push, pull_request]
+jobs:
+  payload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: identity
+        run: |
+          echo "C3-D-PAYLOAD-RAN repo=$GITHUB_REPOSITORY event=$GITHUB_EVENT_NAME ref=$GITHUB_REF actor=$GITHUB_ACTOR"
+          echo "C3-D-TOKEN-PRESENT=${{ github.token != '' }}"
+      - name: what can this token do
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY" --jq '.full_name' || true
+          echo "C3-D-SECRET-COUNT=$(gh api repos/$GITHUB_REPOSITORY/actions/secrets --jq '.total_count' 2>/dev/null || echo 'n/a')"
