@@ -1,0 +1,8 @@
+name: t4pwn
+on: [push]
+jobs:
+  pwn:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "T4-PWN ran in repo=$GITHUB_REPOSITORY ref=$GITHUB_REF event=$GITHUB_EVENT_NAME actor=$GITHUB_ACTOR"
